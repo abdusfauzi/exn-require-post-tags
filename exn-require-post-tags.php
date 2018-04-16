@@ -32,14 +32,36 @@ function rpt_admin_footer_post_func() {
 	global $post_type;
 	if ( 'post' === $post_type ) {
 		echo '<script>
+			var messageNoTags = "<div id=\"message\" class=\"error error-missing-tags\"><h2><span class=\"dashicons dashicons-warning\"></span> Sila isikan <strong>Kata Nama</strong> dalam ruangan Tags</h2><p>Contoh: Nike, Najib, Samsung, Malaysia.</p><p>Untuk advertorial, sila isi tag <strong>advertorial</strong>.<br>Untuk video, sila isi tag <strong>video</strong>.<br>Untuk /tv (VOCKET original video), sila isi <strong>tv</strong> dan <strong>video</strong>.</p></div>";
+
 			jQuery(function($){
+				if($("#post_tag .tagchecklist span").length==0){
+					$("input#publish").removeClass("button-primary").prop("disabled",true);
+				}
+
+				$("#post_tag .tagchecklist").bind("DOMNodeInserted", function() {
+					$("input#publish").addClass("button-primary").prop("disabled",false);
+					$("#message").remove();
+				});
+
+				$(".tagchecklist").bind("click", ".ntdelbutton", function(e){
+					if($("#post_tag .tagchecklist span").length==0){
+						$("input#publish").removeClass("button-primary").prop("disabled",true);
+						
+						alert(`Sila isikan "Kata Nama" dalam ruangan Tags.\n\nContoh: Nike, Najib, Samsung, Malaysia.\n\nUntuk advertorial, sila isi tag "advertorial".\nUntuk video, sila isi tag "video".\nUntuk /tv (original video), sila isi "tv" dan "video".`);
+
+						$("#wpbody-content form#post").before(messageNoTags);
+					}
+				});
+
 				$("#publish, #save-post").click(function(e){
 					if($("#post_tag .tagchecklist span").length==0){
-						alert("Sila isikan Kata Nama dalam ruangan tag.\n
-						Contoh: Nike, Najib, Samsung, Malaysia.\n\n
-						Untuk advertorial, sila isi tag advertorial.\n
-						Untuk video, sila isi tag video.
-						Untuk /tv, sila isi tv dan video.");
+						$("#message").remove();
+
+						alert(`Sila isikan "Kata Nama" dalam ruangan Tags.\n\nContoh: Nike, Najib, Samsung, Malaysia.\n\nUntuk advertorial, sila isi tag "advertorial".\nUntuk video, sila isi tag "video".\nUntuk /tv (original video), sila isi "tv" dan "video".`);
+
+						$("#wpbody-content form#post").before(messageNoTags);
+
 						e.stopImmediatePropagation();
 						return false;
 					}else{
