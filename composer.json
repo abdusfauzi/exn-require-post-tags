@@ -1,0 +1,8 @@
+{
+	"name": "abdusfauzi/exn-require-post-tags",
+	"version": "1.1",
+	"description": "Require users to add at least one post tag before saving a draft, updating a post, or publishing a post.  This applies to normal posts and may not be compatible with custom write panels or custom post types",
+	"keywords": ["wordpress"],
+	"license": "GPL2",
+	"type": "wordpress-plugin"
+}
