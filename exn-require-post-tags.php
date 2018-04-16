@@ -3,7 +3,7 @@
 Plugin Name: EXN Require Post Tags
 Plugin URI: https://github.com/abdusfauzi/exn-require-post-tags
 Description: Require users to add at least one post tag before saving a draft or publishing.
-Version: 1.1
+Version: 1.2
 Author: Abdus Fauzi, Josh Hartman
 Author URI: https://github.com/abdusfauzi/exn-require-post-tags
 License: GPL2
@@ -37,6 +37,7 @@ function rpt_admin_footer_post_func() {
 			jQuery(function($){
 				if($("#post_tag .tagchecklist span").length==0){
 					$("input#publish").removeClass("button-primary").prop("disabled",true);
+					$("#wpbody-content form#post").before(messageNoTags);
 				}
 
 				$("#post_tag .tagchecklist").bind("DOMNodeInserted", function() {
